@@ -2,7 +2,7 @@ package main
 
 import (
 	"html/template"
-	"learn/git"
+	"learn/src/third/git"
 	"log"
 	"net/http"
 )
