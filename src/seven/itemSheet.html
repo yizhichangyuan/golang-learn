@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>item sheet</title>
+</head>
+<body>
+  <table>
+    <tr>
+      <th>item</th>
+      <th>price</th>
+    </tr>
+    {{range $item, $price := .}}
+    <tr>
+      <th>{{$item}}</th>
+      <th>{{$price}}</th>
+    </tr>
+    {{end}}
+  </table>
+</body>
+</html>
