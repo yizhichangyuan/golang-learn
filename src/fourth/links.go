@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"golang.org/x/net/context"
 	"golang.org/x/net/html"
 	"io"
 	"log"
@@ -82,8 +83,19 @@ func breadthFirst(f func(item string) []string, worklist []string) {
 	}
 }
 
+var ctx, cancel = context.WithCancel(context.Background())
+
+func get(url string) (*http.Response, error) {
+	r, err := http.NewRequestWithContext(ctx, "get", url, http.NoBody)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := http.DefaultClient.Do(r)
+	return resp, err
+}
+
 func parse(url string) (*http.Response, error) {
-	resp, err := http.Get(url)
+	resp, err := get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +108,6 @@ func parse(url string) (*http.Response, error) {
 
 func download(base, url string) {
 	resp, err := parse(url)
-
 	// html file parse will parse until to EOF
 	if !strings.HasPrefix(url, base) {
 		return
@@ -133,7 +144,12 @@ func Exists(path string) bool {
 	return true
 }
 
-//func main() {
-//	flag.Parse()
-//	breadthFirst(crawl, []string{*base})
-//}
+func main() {
+	flag.Parse()
+	breadthFirst(crawl, []string{*base})
+	// cancel all requests that are sending when detect input
+	go func() {
+		os.Stdin.Read(make([]byte, 1))
+		cancel()
+	}()
+}

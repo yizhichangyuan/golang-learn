@@ -40,7 +40,7 @@ func main() {
 						}()
 
 						if workItem.depth <= 2 {
-							worklist <- crawl(workItem)
+							worklist <- crawl2(workItem)
 						}
 					}
 				}
@@ -49,7 +49,7 @@ func main() {
 	}
 }
 
-func crawl(w work) []work {
+func crawl2(w work) []work {
 	fmt.Printf("depth: %d, url: %s\n", w.depth, w.link)
 
 	urls, err := links.Extract(w.link)

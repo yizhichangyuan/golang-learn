@@ -14,13 +14,14 @@ func main() {
 	}()
 
 	fmt.Println("Connecting countdown. Press return to abort")
-	tick := time.Tick(1 * time.Second)
+	tick := time.NewTicker(1 * time.Second)
 	for countdown := 10; countdown > 0; countdown-- {
 		fmt.Println(countdown)
 		select {
-		case x := <-tick:
+		case x := <-tick.C:
 			fmt.Println(x)
 		case <-abort:
+			tick.Stop()
 			fmt.Println("launch aborted!")
 			return
 		}
