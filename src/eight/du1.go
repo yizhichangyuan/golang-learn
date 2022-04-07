@@ -109,6 +109,7 @@ func main() {
 	}
 	tick.Stop()
 	printDiskUsage(nfiles, nbytes, infoMap)
+	fmt.Println()
 }
 
 func cancelled() bool {
