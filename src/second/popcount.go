@@ -8,7 +8,7 @@ var pc [256]byte
 func init() {
 	// range repeat ignore value only index for i, _ := range pc
 	for i := range pc {
-		pc[i] = pc[i/2] + byte(i&1)
+		pc[i] = pc[i/2] + byte(i&1) // 数字i的二进制中1的个数 = i右移一位后的个数 + i最低位是否为1
 	}
 }
 
@@ -24,8 +24,7 @@ func PopCount(x uint64) (n int) {
 	//	pc[byte(x>>(4*8))] +
 	//	pc[byte(x>>(5*8))] +
 	//	pc[byte(x>>(6*8))] +
-	//	pc[byte(x>>(7*8))] +
-	//	pc[byte(x>>(8*8))])
+	//	pc[byte(x>>(7*8))])
 }
 
 var pc1 [256]byte = func() (pc1 [256]byte) {
@@ -54,6 +53,8 @@ func PopCountByClearing(x uint64) (n int) {
 }
 
 func main() {
-	fmt.Println(pc)  // already have init
-	fmt.Println(pc1) // already have init
+	//fmt.Println(pc)  // already have init
+	//fmt.Println(pc1) // already have init
+
+	fmt.Println(PopCount(255))
 }

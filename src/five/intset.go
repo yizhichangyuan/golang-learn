@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io"
 )
 
 // 当 uint 为 unitSize 位时，unitSize 个 1111111... 右移 63 位变成 1，32 再左移 1 位变成 unitSize
@@ -163,31 +162,17 @@ func (s *IntSet) Elems() []uint {
 }
 
 func main() {
-	//var s IntSet
-	//s.Add(1)
-	//s.Add(144)
-	//s.Add(9)
-	//fmt.Println(s.String())
-	//fmt.Println(&s)
-	//
-	//x := s.Copy()
-	//fmt.Println(x.Len())
-	//s.IntersectWith(x)
-	//x.words = x.words[:x.Len()-1]
-	//s.IntersectWith(x)
-	//fmt.Println(s.String())
+	var s IntSet
+	s.Add(1)
+	s.Add(144)
+	s.Add(9)
+	fmt.Println(s.String())
+	fmt.Println(&s)
 
-	names := []string{"a", "b", "c"}
-	var x = make([]interface{}, len(names))
-	for i, name := range names {
-		x[i] = name
-	}
-	printStr(x)
-	var _ io.Writer = new(bytes.Buffer)
-}
-
-func printStr(str []interface{}) {
-	for _, val := range str {
-		fmt.Println(val)
-	}
+	x := s.Copy()
+	fmt.Println(x.Len())
+	s.IntersectWith(x)
+	x.words = x.words[:x.Len()-1]
+	s.IntersectWith(x)
+	fmt.Println(s.String())
 }
